@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NASA TechPort 장문 기술문서와 프로젝트 메타데이터를 활용한 End-TRL 자동 분류 연구" />
+  <title>End-TRL Research — 기술성숙도 분류 연구</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23091320'/%3E%3Cpath d='M15 43V21h8v22zm13 0V27h8v16zm13 0V15h8v28z' fill='%234dffd1'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="End-TRL Research 홈">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>END—TRL <b>RESEARCH</b></span>
+    </a>
+    <nav aria-label="주요 메뉴">
+      <a href="#question">연구 질문</a>
+      <a href="#method">방법론</a>
+      <a href="#results">결과</a>
+      <a href="#scope">해석 범위</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> NASA TECHPORT · END-TRL CLASSIFICATION</p>
+        <h1 id="hero-title">긴 기술문서에서<br><em>성숙도의 신호</em>를 찾다</h1>
+        <p class="lead">장문 기술 설명과 프로젝트 메타데이터를 결합해 기록된 종료 추정 기술성숙도(End TRL)를 Low·Mid·High 세 구간으로 분류하는 실증 연구입니다.</p>
+        <div class="hero-links">
+          <a class="primary-link" href="#results">핵심 결과 보기</a>
+          <a class="text-link" href="#method">연구 설계 살펴보기</a>
+        </div>
+      </div>
+      <div class="signal-card" aria-label="연구 데이터 요약">
+        <div class="signal-top"><span>TRL SIGNAL MAP</span><span>OOF · 5 FOLDS</span></div>
+        <div class="rings" aria-hidden="true">
+          <div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div>
+          <div class="scan"></div><div class="core">3<span>CLASSES</span></div>
+          <span class="node n1">LOW</span><span class="node n2">MID</span><span class="node n3">HIGH</span>
+        </div>
+        <div class="signal-stats">
+          <div><strong>9,632</strong><span>개발 레코드</span></div>
+          <div><strong>8,651</strong><span>독립 그룹</span></div>
+          <div><strong>292</strong><span>신규 외부 과제</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem" id="question">
+      <div class="section-label">01 / THE QUESTION</div>
+      <div class="problem-grid">
+        <div>
+          <h2>512토큰 안에<br>무엇을 남길 것인가?</h2>
+          <p>기술문서의 40.40%는 512토큰을 넘습니다. 중요한 단서가 문서의 앞과 뒤에 흩어진 상황에서, 입력 선택과 메타데이터 결합은 분류 결과를 크게 바꿀 수 있습니다.</p>
+        </div>
+        <ol class="questions">
+          <li><span>RQ 01</span><p>앞부분, 앞·뒤 구간, 통계적 문장, TRL 관련 문장 중 어떤 입력이 가장 효과적인가?</p></li>
+          <li><span>RQ 02</span><p>텍스트 모델과 메타데이터 모델은 전체 성능과 High 탐지에서 어떤 절충을 보이는가?</p></li>
+          <li><span>RQ 03</span><p>개발 데이터의 모델 순위는 새 과제에서도 유지되는가?</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="method" id="method">
+      <div class="section-label">02 / RESEARCH DESIGN</div>
+      <div class="section-heading">
+        <h2>문서에서 결정까지,<br>검증 가능한 흐름</h2>
+        <p>텍스트와 메타데이터를 분리해 관찰하고, 고정된 그룹 기반 5-fold OOF 평가와 신규 과제 시험으로 결과의 적용 범위를 확인했습니다.</p>
+      </div>
+      <div class="pipeline" role="list" aria-label="연구 파이프라인">
+        <article role="listitem"><b>01</b><div class="pipe-icon">TXT</div><h3>기술문서 구성</h3><p>Title · Description · Benefits</p><small>장문 입력 / 512 token budget</small></article>
+        <article role="listitem"><b>02</b><div class="pipe-icon">H/T</div><h3>Head–Tail 선택</h3><p>앞 128 + 뒤 382 토큰</p><small>멀리 떨어진 문맥 보존</small></article>
+        <article role="listitem"><b>03</b><div class="pipe-icon">SCI</div><h3>SciBERT 인코딩</h3><p>과학기술 문맥 표현</p><small>CLS + metadata fusion</small></article>
+        <article role="listitem"><b>04</b><div class="pipe-icon">3×</div><h3>세 구간 분류</h3><p>Low 1–3 · Mid 4–6 · High 7–9</p><small>class-aware evaluation</small></article>
+      </div>
+    </section>
+
+    <section class="results" id="results">
+      <div class="section-label">03 / KEY FINDINGS</div>
+      <div class="section-heading result-head">
+        <div><h2>하나의 최고점보다<br>목적에 맞는 선택</h2><p>정확도, 등급 균형, High 탐지율은 같은 방향으로 움직이지 않았습니다.</p></div>
+        <div class="model-tabs" role="tablist" aria-label="모델 결과 선택">
+          <button class="active" role="tab" aria-selected="true" data-model="s1">S1</button>
+          <button role="tab" aria-selected="false" data-model="hgb">HGB</button>
+          <button role="tab" aria-selected="false" data-model="mix">MIX</button>
+        </div>
+      </div>
+
+      <div class="metric-stage" aria-live="polite">
+        <div class="metric-main">
+          <span class="metric-kicker" id="model-kicker">BEST TEXT + METADATA MODEL</span>
+          <div class="metric-number"><strong id="metric-value">78.98</strong><sup id="metric-unit">%</sup></div>
+          <h3 id="metric-label">개발 OOF 정확도</h3>
+          <p id="metric-note">Head–Tail 입력과 SciBERT, 메타데이터를 결합한 S1은 내부 입력 조건 중 가장 높은 Macro-F1을 기록했습니다.</p>
+        </div>
+        <div class="metric-side">
+          <div><span>MACRO-F1</span><strong id="macro-value">0.7045</strong><div class="bar"><i id="macro-bar" style="width:70.45%"></i></div></div>
+          <div><span>HIGH RECALL</span><strong id="recall-value">55.37%</strong><div class="bar"><i id="recall-bar" style="width:55.37%"></i></div></div>
+          <div><span>평가 범위</span><strong id="scope-value">개발 OOF</strong><p id="scope-note">고정 group 기반 5-fold · n=9,632</p></div>
+        </div>
+      </div>
+
+      <div class="comparison">
+        <div class="comparison-title"><h3>입력 전략별 Macro-F1</h3><span>동일 9,632개 표본 · pooled OOF</span></div>
+        <div class="chart" aria-label="입력 전략별 Macro-F1 막대그래프">
+          <div class="chart-row"><span>S1 Head–Tail</span><div><i style="--score:70.4507%"></i></div><b>0.7045</b></div>
+          <div class="chart-row"><span>S2 TF-IDF 선택</span><div><i style="--score:69.5966%"></i></div><b>0.6960</b></div>
+          <div class="chart-row"><span>S3 TRL 문장 선택</span><div><i style="--score:69.3924%"></i></div><b>0.6939</b></div>
+          <div class="chart-row"><span>S0 Head</span><div><i style="--score:69.1168%"></i></div><b>0.6912</b></div>
+          <div class="chart-row baseline"><span>TF-IDF + LR</span><div><i style="--score:55.5329%"></i></div><b>0.5553</b></div>
+        </div>
+      </div>
+
+      <div class="external-result">
+        <div class="external-copy"><span>INDEPENDENT COHORT</span><h3>새로운 292개 과제에서도<br>S1의 강건성을 확인했습니다.</h3><p>동결된 기준선을 사용한 신규 과제 시험에서 S1은 정확도 78.42%, Macro-F1 0.738845를 기록했습니다.</p></div>
+        <div class="external-number"><strong>78.42<sup>%</sup></strong><span>외부 과제 정확도</span><small>95% CI · 73.63–83.22</small></div>
+      </div>
+    </section>
+
+    <section class="scope" id="scope">
+      <div class="section-label">04 / INTERPRETATION</div>
+      <div class="scope-grid">
+        <div class="scope-title"><h2>결과를 강하게 만드는<br>명확한 경계</h2><p>이 연구가 답한 것과 아직 답하지 않은 것을 함께 제시합니다.</p></div>
+        <div class="scope-card positive"><span>SUPPORTED</span><h3>현재 자료로 말할 수 있는 것</h3><ul><li>기록된 종료 추정 TRL의 3구간 분류</li><li>입력 구성과 정보원별 성능 차이</li><li>High 탐지율과 전체 정확도의 절충</li><li>동결 기준선의 신규 과제 평가</li></ul></div>
+        <div class="scope-card caution"><span>NOT CLAIMED</span><h3>추가 검증이 필요한 것</h3><ul><li>실제 기술성숙도의 독립 인증</li><li>시작 시점 정보만을 이용한 미래 예측</li><li>모든 신규 후보 모델의 외부 일반화</li><li>문장 선택 근거의 인간 타당성 평가</li></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><span class="footer-mark">E—TRL</span><p>Automated Classification of Recorded End TRL<br>Using Technical Text and Project Metadata</p></div>
+    <p class="footer-note">RESEARCH OVERVIEW · 2026</p>
+  </footer>
+  <script src="./script.js"></script>
+</body>
+</html>
